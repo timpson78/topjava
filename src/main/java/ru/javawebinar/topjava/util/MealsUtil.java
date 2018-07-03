@@ -41,7 +41,9 @@ public class MealsUtil {
                 );
 
         return meals.stream()
-                .map(meal -> createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
+                .map((Meal meal) -> {
+                    return createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay);
+                })
                 .collect(toList());
     }
 
@@ -119,6 +121,6 @@ public class MealsUtil {
     }
 
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
-        return new MealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
+        return new MealWithExceed(meal.getId(),meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
     }
 }

@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ListStorage implements Storage {
 
-    protected List<MealWithExceed> storageLst = new ArrayList<>();
+    protected List<Meal> storageLst = new ArrayList<>();
 
-    public ListStorage(List<MealWithExceed> storageLst) {
+    public ListStorage(List<Meal> storageLst) {
         this.storageLst = storageLst;
     }
 
@@ -25,7 +25,7 @@ public class ListStorage implements Storage {
     }
 
     @Override
-    public void update(MealWithExceed m) {
+    public void update(Meal m) {
         int pos=getSearchKey(m.getId());
         if (isExist(pos)) {
             storageLst.set((Integer) pos, m);
@@ -35,7 +35,7 @@ public class ListStorage implements Storage {
     }
 
     @Override
-    public void save(MealWithExceed m) {
+    public void save(Meal m) {
 
         if (isExist(  getSearchKey(m.getId()))) {
             throw new ExistStorageException(m.getId());
@@ -46,11 +46,11 @@ public class ListStorage implements Storage {
 
     @Override
     public boolean isExist(Integer index) {
-        return index != null;
+        return index!= null;
     }
 
     @Override
-    public MealWithExceed get(String id) {
+    public Meal get(String id) {
         return storageLst.get(getSearchKey(id));
     }
 
@@ -65,7 +65,7 @@ public class ListStorage implements Storage {
     }
 
     @Override
-    public List<MealWithExceed> getAllSorted() {
+    public List<Meal> getAllSorted() {
         return storageLst;
     }
 

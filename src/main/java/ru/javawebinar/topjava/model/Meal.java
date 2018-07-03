@@ -1,24 +1,47 @@
 package ru.javawebinar.topjava.model;
 
+import ru.javawebinar.topjava.util.DateUtil;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class Meal {
-    private final LocalDateTime dateTime;
 
-    private final String description;
+    private final String id;
 
-    private final int calories;
+    private LocalDateTime dateTime;
+
+    private String description;
+
+    private  int calories;
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public LocalDateTime getDateTime() {
-        return dateTime;
+        return DateUtil.DateTimeFormat(dateTime);
     }
 
     public String getDescription() {
