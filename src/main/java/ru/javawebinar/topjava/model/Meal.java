@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import ru.javawebinar.topjava.util.DateUtil;
+import ru.javawebinar.topjava.util.IdUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +22,14 @@ public class Meal {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
-        this.id = UUID.randomUUID().toString();
+        this.id = IdUtil.generateID();
+    }
+
+    public Meal(String id,LocalDateTime dateTime, String description, int calories) {
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
+        this.id = id;
     }
 
     public String getId() {
@@ -41,7 +49,7 @@ public class Meal {
     }
 
     public LocalDateTime getDateTime() {
-        return DateUtil.DateTimeFormat(dateTime);
+        return DateUtil.dateTimeFormat(dateTime);
     }
 
     public String getDescription() {

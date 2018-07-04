@@ -1,19 +1,18 @@
 package ru.javawebinar.topjava.Config;
 
 import ru.javawebinar.topjava.model.Meal;
-import storage.ListStorage;
-import storage.Storage;
+import ru.javawebinar.topjava.storage.MapConcurrentStorage;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class Config {
 
-    public static ListStorage dataInitialization() {
+    public static MapConcurrentStorage dataInitialization() {
         ArrayList<Meal> listMeals=new ArrayList<>(Arrays.asList(
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
@@ -23,6 +22,10 @@ public class Config {
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         ));
 
-        return new ListStorage(listMeals);
+        ConcurrentHashMap<String, Meal> chm=new ConcurrentHashMap();
+        for (Meal meal:listMeals) {
+            chm.put(meal.getId(),meal);
+        }
+        return new MapConcurrentStorage(chm);
     }
 }

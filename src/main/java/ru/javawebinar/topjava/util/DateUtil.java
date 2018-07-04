@@ -10,11 +10,11 @@ public   class DateUtil {
     //DateTimeFormatter formatter=DateTimeFormatter.ofPattern("");
     public static DateTimeFormatter formatter=DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-    public static LocalDateTime DateTimeFormat(LocalDateTime ld){
+    public static LocalDateTime dateTimeFormat(LocalDateTime ld){
         return LocalDateTime.parse(ld.format(formatter),formatter);
     }
 
-    public static LocalDateTime StringDateTimeFormat(String s){
+    public static LocalDateTime stringDateTimeFormat(String s){
         return LocalDateTime.parse(s,formatter);
     }
 }

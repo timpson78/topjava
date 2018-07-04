@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.model;
 import ru.javawebinar.topjava.util.DateUtil;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class MealWithExceed {
 
@@ -28,7 +27,7 @@ public class MealWithExceed {
     }
 
     public LocalDateTime getDateTime() {
-        return DateUtil.DateTimeFormat(dateTime);
+        return DateUtil.dateTimeFormat(dateTime);
     }
 
     public String getDescription() {
@@ -60,29 +59,6 @@ public class MealWithExceed {
         this.exceed = exceed;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MealWithExceed)) return false;
-
-        MealWithExceed that = (MealWithExceed) o;
-
-        if (calories != that.calories) return false;
-        if (exceed != that.exceed) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + calories;
-        result = 31 * result + (exceed ? 1 : 0);
-        return result;
-    }
 
     @Override
     public String toString() {

@@ -39,12 +39,12 @@
                     <td>${meal.description} </td><td>${meal.calories}</td> <td><a href="?action=edit&id=${meal.id}">Изменить</a></td><td><a href="?action=delete&id=${meal.id}">Удалить</a></td>
                 </tr>
             </c:when>
-            <c:when test="${meal.exceed eq false}">
+            <c:otherwise>
                 <tr class="text-success">
                     <td>${counter.index}</td> <td><fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parseDateTime" /> <fmt:formatDate pattern="dd.MM.yyyy HH:mm"  value="${parseDateTime}" /></td>
                     <td>${meal.description} </td><td>${meal.calories}</td><td><a href="?action=edit&id=${meal.id}">Изменить</a></td><td><a href="?action=delete&id=${meal.id}">Удалить</a></td>
                 </tr>
-            </c:when>
+            </c:otherwise>
         </c:choose>
     </c:forEach>
     </tbody>
