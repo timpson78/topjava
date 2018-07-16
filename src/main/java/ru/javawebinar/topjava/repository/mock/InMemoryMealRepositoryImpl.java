@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
+
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepositoryImpl.class);
@@ -40,6 +41,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
     }
 
+    public InMemoryMealRepositoryImpl() {
+
+    }
 
     @Override
     public Meal save(Meal meal, int userId) {
