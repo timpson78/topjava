@@ -7,3 +7,4 @@
     <title><spring:message code="app.title"/></title>
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
+
