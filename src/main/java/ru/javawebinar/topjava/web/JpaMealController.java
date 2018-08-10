@@ -11,9 +11,14 @@ import ru.javawebinar.topjava.web.meal.AbstractMealController;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
 @RequestMapping(value = "/meals")
@@ -64,6 +69,16 @@ public class JpaMealController extends AbstractMealController {
         Meal meal=new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", CALORIES_DEFAULT);
         model.addAttribute("meal", meal);
         return "mealForm";
+    }
+
+    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    public String filter(HttpServletRequest request,Model model) {
+        LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+        LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+        LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+        LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+        model.addAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
+        return "meals";
     }
 
 
