@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.web.meal.MealRestController;
+import ru.javawebinar.topjava.web.meal.AbstractMealController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,27 +17,31 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/meals")
-public class JpaMealController  {
+public class JpaMealController extends AbstractMealController {
 
     private static final int CALORIES_DEFAULT =1000 ;
 
     @Autowired
-    private MealRestController controller;
+    public JpaMealController(MealService service) {
+        super(service);
+
+    }
+    //  private AbstractMealCotroller controller;
 
     @GetMapping("")
-    public String getall(Model model) {
-        model.addAttribute("meals", controller.getAll());
+    public String getall_(Model model) {
+        model.addAttribute("meals", super.getAll());
         return "meals";
     }
     @GetMapping("/delete")
-    public String delete(@RequestParam("id") int id){
-        controller.delete(id);
+    public String delete_(@RequestParam("id") int id){
+        super.delete(id);
         return "redirect:/meals";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(Model model,@RequestParam("id") int id){
-        model.addAttribute("meal", controller.get(id));
+    public String update_(Model model,@RequestParam("id") int id){
+        model.addAttribute("meal", super.get(id));
         return "mealForm";
     }
 
@@ -46,9 +50,9 @@ public class JpaMealController  {
         request.setCharacterEncoding("UTF-8");
         Meal meal = CreateMealFromRequest(request);
         if (request.getParameter("id").isEmpty()) {
-            controller.create(meal);
+            super.create(meal);
         } else {
-            controller.update(meal, getId(request));
+            super.update(meal, getId(request));
         }
 
        return "redirect:/meals";
