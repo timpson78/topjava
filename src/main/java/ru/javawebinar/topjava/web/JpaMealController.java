@@ -1,0 +1,80 @@
+package ru.javawebinar.topjava.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.web.meal.MealRestController;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+
+@Controller
+@RequestMapping(value = "/meals")
+public class JpaMealController  {
+
+    private static final int CALORIES_DEFAULT =1000 ;
+
+    @Autowired
+    private MealRestController controller;
+
+    @GetMapping("")
+    public String getall(Model model) {
+        model.addAttribute("meals", controller.getAll());
+        return "meals";
+    }
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") int id){
+        controller.delete(id);
+        return "redirect:/meals";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String update(Model model,@RequestParam("id") int id){
+        model.addAttribute("meal", controller.get(id));
+        return "mealForm";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updatesave(HttpServletRequest request) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        Meal meal = CreateMealFromRequest(request);
+        if (request.getParameter("id").isEmpty()) {
+            controller.create(meal);
+        } else {
+            controller.update(meal, getId(request));
+        }
+
+       return "redirect:/meals";
+    }
+
+
+    @RequestMapping(value = "/create", method = {RequestMethod.GET})
+    public String create(Model model) {
+        Meal meal=new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", CALORIES_DEFAULT);
+        model.addAttribute("meal", meal);
+        return "mealForm";
+    }
+
+
+    private Meal CreateMealFromRequest(HttpServletRequest request) {
+        return new Meal(
+                LocalDateTime.parse(request.getParameter("dateTime")),
+                request.getParameter("description"),
+                Integer.parseInt(request.getParameter("calories")));
+    }
+
+
+    private int getId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("id"));
+        return Integer.parseInt(paramId);
+    }
+
+
+}
