@@ -54,7 +54,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void notFoundDelete() throws Exception {
+    public void deletedNotFound() throws Exception {
         service.delete(1);
     }
 
