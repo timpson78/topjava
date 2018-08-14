@@ -36,7 +36,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
-        assertMatch(service.getAll(), ADMIN, newUser, USER);
+        assertMatch(service.getAll(), ADMIN,  USER, newUser);
     }
 
     @Test(expected = DataAccessException.class)
@@ -47,7 +47,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertMatch(service.getAll(), ADMIN);
+         assertMatch(service.getAll(), ADMIN);
     }
 
     @Test(expected = NotFoundException.class)
